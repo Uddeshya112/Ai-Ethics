@@ -59,11 +59,11 @@ Copy `.env.example` to `.env.local` when configuring Supabase. No credentials ar
 2. Add source/claim schemas, integrity checks, and a correction log.
 3. Integrate Supabase Auth, SSR cookies, private workspace records, and tested Row Level Security.
 4. Expand visualizations and complete the presentation with a formal source-linked notes/export workflow.
-5. Add CI, accessibility tests, and a Vercel preview deployment after credentials and project ownership are confirmed.
+5. Add accessibility tests and a Vercel preview deployment after credentials and project ownership are confirmed. CI is now configured in GitHub Actions.
 
 ## Status
 
-Initial website slice; deployment, automated checks, Supabase integration, and formal editorial review have not yet been run or completed.
+Initial website slice. GitHub Actions CI is configured and its latest run on 2026-10-10 passed lint, typecheck, tests, and production build. Deployment, live Supabase integration/RLS verification, accessibility tests, and formal editorial review remain incomplete.
 
 
 ## Evidence registry and private workspace foundation
