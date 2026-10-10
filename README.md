@@ -56,7 +56,7 @@ Copy `.env.example` to `.env.local` when configuring Supabase. No credentials ar
 ## Roadmap
 
 1. Add and maintain precise source locators for the reviewed NTSB claims. Full verification of the Handan case and independent editorial review remain open.
-2. Add source/claim schemas, integrity checks, and a correction log.
+2. Source/claim schemas and integrity checks are in place. Add and maintain the correction log.
 3. Integrate Supabase Auth, SSR cookies, private workspace records, and tested Row Level Security.
 4. Expand visualizations. The presentation now includes source-linked presenter notes and a Markdown export.
 5. Accessibility scans now run in CI across 16 public routes. Configure Vercel preview deployment after credentials and project ownership are confirmed.
