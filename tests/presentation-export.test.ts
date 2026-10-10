@@ -7,7 +7,7 @@ describe("speaker notes export", () => {
 
     expect(markdown).toContain("**Speaker notes:**");
     expect(markdown).toContain("[National Transportation Safety Board:");
-    expect(markdown).toContain("https://www.ntsb.gov/investigations/pages/hwy16fh018.aspx");
+    expect(markdown).toContain("https://www.ntsb.gov/investigations/AccidentReports/Reports/HAR1702.pdf");
     expect(markdown).toContain("[The Guardian (Reuters reporting):");
   });
 
