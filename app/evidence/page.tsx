@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { ArrowUpRight, BookOpenCheck, ExternalLink, Info } from "lucide-react";
+import { BookOpenCheck, ExternalLink, Info } from "lucide-react";
 
 export const metadata: Metadata = { title: "Evidence ledger", description: "Primary sources, claim classifications, and limitations for the Beyond Autopilot research project." };
 

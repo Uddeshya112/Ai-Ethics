@@ -1,7 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useState } from "react";
-import { ArrowLeft, ArrowRight, Maximize2, RotateCcw } from "lucide-react";
+import { ArrowLeft, ArrowRight, RotateCcw } from "lucide-react";
 
 const slides = [
   { section: "OPENING", title: "Beyond Autopilot", subtitle: "AI ethics, human trust, and the limits of automated driving", bullets: ["Three fatal crash case studies", "A question of human–automation responsibility", "An evidence-first research project"], note: "Introduce the research question. Clarify that this is not a claim that all incidents share a cause." },
