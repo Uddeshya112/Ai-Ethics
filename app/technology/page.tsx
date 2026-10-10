@@ -1,0 +1,15 @@
+import type { Metadata } from "next";
+import Link from "next/link";
+import { AlertTriangle, Eye, GitBranch, ScanSearch, ShieldCheck } from "lucide-react";
+export const metadata:Metadata={title:"Driver-assistance technology",description:"A generalized conceptual model of sensing, perception, planning, actuation, and human supervision."};
+const stages=[
+{number:"01",title:"Sensing",icon:Eye,text:"Sensors collect signals about the surrounding scene. Sensor suites and capabilities vary by vehicle and system."},
+{number:"02",title:"Perception",icon:ScanSearch,text:"Software estimates lanes, objects, motion, and other features from imperfect sensor data. Estimates can be uncertain or wrong."},
+{number:"03",title:"Planning and control",icon:GitBranch,text:"The system selects target behavior and commands steering, braking, or acceleration within intended operating conditions."},
+{number:"04",title:"Human supervision",icon:ShieldCheck,text:"For SAE Level 2 assistance, the driver remains responsible for continuous supervision and must be ready to intervene as required."}
+];
+export default function TechnologyPage(){return <div className="page-shell shell">
+<div className="page-hero"><div className="eyebrow"><span className="eyebrow-line"/> TECHNOLOGY / EXPLAINER</div><h1>Assistance is a system.<br/><em>Not a promise.</em></h1><p className="page-lede">This is a generalized conceptual architecture for driver-assistance systems, not proprietary architecture for any manufacturer. Sensor suites, implementation details, and operating limits differ.</p></div>
+<ol className="technology-pipeline">{stages.map((stage,index)=>{const Icon=stage.icon;return <li className="technology-stage" key={stage.number}><span className="technology-stage-number">{stage.number}</span><div className="technology-stage-icon"><Icon size={22} aria-hidden="true"/></div><h2>{stage.title}</h2><p>{stage.text}</p>{index<stages.length-1&&<span className="technology-arrow" aria-hidden="true">↓</span>}</li>;})}</ol>
+<section className="notice-box"><AlertTriangle size={20}/><div><strong>The supervision interface is a design question.</strong><p>Stable performance in routine situations does not establish reliable performance in every situation. A conceptual concern is whether a driver can understand system limits, remain attentive, and respond to change. This is not a finding about an individual crash.</p></div></section>
+<section className="research-link-grid"><Link className="research-link-card" href="/ethics-lab"><span>TRY A MODEL</span><strong>Ethics Lab</strong><small>Inspect assumptions in a simplified educational scenario.</small></Link><Link className="research-link-card" href="/evidence"><span>READ SOURCES</span><strong>Evidence ledger</strong><small>See how the project labels evidence and uncertainty.</small></Link><Link className="research-link-card" href="/accountability"><span>WIDEN THE LENS</span><strong>Accountability</strong><small>Consider roles around a complex technical system.</small></Link></section></div>;}
