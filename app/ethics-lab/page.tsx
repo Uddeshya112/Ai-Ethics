@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import { computeStoppingDistance } from "@/lib/simulations/stopping-distance";
 import { AlertTriangle, ArrowRight, RotateCcw, SlidersHorizontal } from "lucide-react";
 
 const clamp = (n: number, min: number, max: number) => Math.min(max, Math.max(min, n));
@@ -11,9 +12,8 @@ export default function EthicsLabPage() {
   const [response, setResponse] = useState(0.8);
   const [margin, setMargin] = useState(1.2);
   const stoppingDistance = useMemo(() => {
-    const reaction = (speed / 3.6) * (attention + response);
-    const braking = Math.pow(speed / 3.6, 2) / (2 * 7);
-    return Math.round(reaction + braking);
+    const result = computeStoppingDistance({ speedKmh: speed, reactionTimeSeconds: attention + response, decelerationMps2: 7 });
+    return result.ok ? Math.round(result.value.totalDistanceMeters) : 0;
   }, [speed, attention, response]);
   const remaining = Math.round((speed / 3.6) * margin);
   const risk = stoppingDistance > remaining ? "Insufficient margin in this conceptual setup" : "Margin remains in this conceptual setup";

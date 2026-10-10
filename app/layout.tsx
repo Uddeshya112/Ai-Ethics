@@ -22,6 +22,7 @@ const nav = [
   { href: "/evidence", label: "Evidence" },
   { href: "/ethics-lab", label: "Ethics Lab" },
   { href: "/presentation", label: "Presentation" },
+  { href: "/login", label: "Account" },
 ];
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {

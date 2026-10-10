@@ -64,3 +64,23 @@ Copy `.env.example` to `.env.local` when configuring Supabase. No credentials ar
 ## Status
 
 Initial website slice; deployment, automated checks, Supabase integration, and formal editorial review have not yet been run or completed.
+
+
+## Evidence registry and private workspace foundation
+
+The research registry has typed source, incident, and claim records. Claim classifications separate official findings, documented facts, reported facts, project interpretations, hypotheses, and conceptual assumptions. Integrity tests check registry references and require official-report sources for claims labeled as official findings.
+
+All claims and incidents begin in `draft` status. A live source URL is not the same as passage-level editorial verification. Do not publish a claim until its report passage, locator, context, and limitations have been reviewed.
+
+### Supabase setup
+
+1. Create a Supabase project and copy its URL and publishable key into `.env.local` using `.env.example`.
+2. Apply `supabase/migrations/0001_init.sql` through the Supabase CLI or SQL editor.
+3. Set the Supabase Auth Site URL to `http://localhost:3000` and allow the `/auth/callback` redirect URL.
+4. Run `npm install`, `npm test`, `npm run lint`, `npm run typecheck`, and `npm run build`.
+
+The dashboard verifies the authenticated user on the server. Private notes, bookmarks, and saved simulations have per-user Row Level Security policies. The service-role key is never used in browser code.
+
+### Verification status
+
+The schema, auth routes, and tests are scaffolding for review; live Supabase redirect tests and RLS integration tests remain release gates.
