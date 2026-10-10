@@ -80,3 +80,7 @@
 }
 .status-alert{color:#704615}
 .status-ok{color:#3d5e31}
+
+/* Remaining muted labels flagged by the route-level accessibility scan */
+:root{--muted:#4b5950}
+.reflection-grid article>span,.reflection-grid p,.timer-duration{color:#4b5950!important}
