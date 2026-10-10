@@ -1,6 +1,5 @@
 "use client";
 
-import type { Metadata } from "next";
 import { useMemo, useState } from "react";
 import { AlertTriangle, ArrowRight, RotateCcw, SlidersHorizontal } from "lucide-react";
 
