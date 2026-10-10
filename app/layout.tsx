@@ -19,7 +19,11 @@ export const metadata: Metadata = {
 
 const nav = [
   { href: "/cases", label: "Case studies" },
+  { href: "/research", label: "Research" },
+  { href: "/timeline", label: "Timeline" },
+  { href: "/technology", label: "Technology" },
   { href: "/evidence", label: "Evidence" },
+  { href: "/accountability", label: "Accountability" },
   { href: "/ethics-lab", label: "Ethics Lab" },
   { href: "/presentation", label: "Presentation" },
 ];
