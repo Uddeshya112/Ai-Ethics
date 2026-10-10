@@ -113,6 +113,7 @@
 .quiz-feedback[aria-live]{min-height:44px}
 .timeline-legend{display:flex;gap:8px;flex-wrap:wrap;margin-top:18px}
 .timeline-legend span{border:1px solid var(--line);padding:5px 8px;font:9px var(--mono);color:#58645b}
+.claim-register .source-card{grid-template-columns:minmax(0,1fr)}
 .nav-links{display:flex;gap:31px;align-items:center}
 .main-nav a[aria-current="page"]{color:var(--ink);position:relative}
 .main-nav a[aria-current="page"]:after{content:"";position:absolute;left:0;right:0;bottom:-8px;height:2px;background:#8ba66d}
