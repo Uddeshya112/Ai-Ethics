@@ -1,11 +1,25 @@
 "use client";
 import { useCallback,useEffect,useMemo,useRef,useState } from "react";
 import Link from "next/link";
-import { ArrowLeft,ArrowRight,Maximize2,Pause,Play,RotateCcw,Timer,X } from "lucide-react";
+import { ArrowLeft,ArrowRight,Download,Maximize2,Pause,Play,RotateCcw,Timer,X } from "lucide-react";
 import { presentationSlides,validatePresentation } from "@/lib/presentation/deck";
+import { sources } from "@/lib/research/sources";
+import { buildSpeakerNotesMarkdown } from "@/lib/presentation/export";
 const DEFAULT_MINUTES=15;
 const TIMER_PRESETS=[5,10,15,20,30] as const;
 function formatTime(seconds:number):string{const safe=Math.max(0,Math.floor(seconds));return String(Math.floor(safe/60)).padStart(2,"0")+":"+String(safe%60).padStart(2,"0");}
+function SlideSourceLinks({sourceIds}:{sourceIds:readonly string[]}){
+const linkedSources=sourceIds.map((id)=>sources.find((source)=>source.id===id)).filter((source)=>source!==undefined);
+if(linkedSources.length===0)return null;
+return <div className="presenter-source-list"><strong>Sources</strong><ul>{linkedSources.map((source)=><li key={source.id}><a href={source.url} target="_blank" rel="noreferrer">{source.publisher}: {source.title} ↗</a></li>)}</ul></div>;
+}
+function downloadSpeakerNotes(){
+const blob=new Blob([buildSpeakerNotesMarkdown()],{type:"text/markdown;charset=utf-8"});
+const url=URL.createObjectURL(blob);
+const anchor=document.createElement("a");
+anchor.href=url;anchor.download="beyond-autopilot-speaker-notes.md";anchor.click();
+window.setTimeout(()=>URL.revokeObjectURL(url),0);
+}
 export default function PresentationClient(){
 const rootRef=useRef<HTMLDivElement>(null);const [index,setIndex]=useState(0);const [showNotes,setShowNotes]=useState(false);const [presenterMode,setPresenterMode]=useState(false);const [fullscreenMessage,setFullscreenMessage]=useState<string|null>(null);const [timerMinutes,setTimerMinutes]=useState<number>(DEFAULT_MINUTES);const [remaining,setRemaining]=useState(DEFAULT_MINUTES*60);const [running,setRunning]=useState(false);
 const current=presentationSlides[index];const next=presentationSlides[(index+1)%presentationSlides.length];const issues=useMemo(()=>validatePresentation(),[]);const move=useCallback((delta:number)=>setIndex((value)=>(value+delta+presentationSlides.length)%presentationSlides.length),[]);
@@ -22,11 +36,11 @@ return <div ref={rootRef} className={"presentation-page shell"+(presenterMode?" 
 <div className="presenter-stage"><section className="slide-frame" aria-label={"Slide "+(index+1)+" of "+presentationSlides.length}><div className="slide-topline"><span>BEYOND AUTOPILOT</span><span>{current.section}</span><span>{String(index+1).padStart(2,"0")} / {presentationSlides.length}</span></div><div className="slide-body" key={current.id}><div className="slide-accent"/><div className="slide-section">{current.section}</div><h2>{current.title}</h2><p className="slide-subtitle">{current.subtitle}</p><ul>{current.bullets.map((bullet)=><li key={bullet}><span aria-hidden="true"/>{bullet}</li>)}</ul></div><div className="slide-footer"><span>AI ETHICS · HUMAN TRUST</span><span>RESEARCH PREVIEW · NOT FINAL DECK</span></div></section>
 <aside className="presenter-side-panel" aria-label="Presenter controls">
 <section className="presenter-panel-section"><div className="presenter-panel-label">TIMER</div><div className={"presenter-timer"+(remaining===0?" timer-finished":"")}><Timer size={19}/><output aria-live="polite">{formatTime(remaining)}</output></div><label className="timer-duration">Duration<select value={timerMinutes} onChange={(event)=>changeDuration(Number(event.target.value))}>{TIMER_PRESETS.map((minutes)=><option key={minutes} value={minutes}>{minutes} minutes</option>)}</select></label><div className="timer-actions"><button type="button" className="button button-dark" onClick={()=>setRunning((value)=>!value)} disabled={remaining===0} aria-label={running?"Pause timer":"Start timer"}>{running?<Pause size={15}/>:<Play size={15}/>} {running?"Pause":"Start"}</button><button type="button" className="button button-outline" onClick={resetTimer}><RotateCcw size={15}/> Reset</button></div></section>
-<section className="presenter-panel-section"><div className="presenter-panel-label">SPEAKER NOTES · {String(index+1).padStart(2,"0")}</div><p className="presenter-note">{current.note}</p></section>
+<section className="presenter-panel-section"><div className="presenter-panel-label">SPEAKER NOTES · {String(index+1).padStart(2,"0")}</div><p className="presenter-note">{current.note}</p><SlideSourceLinks sourceIds={current.sourceIds}/></section>
 <section className="presenter-panel-section presenter-next-slide"><div className="presenter-panel-label">UP NEXT</div><small>{next.section}</small><strong>{next.title}</strong><p>{next.subtitle}</p></section>
 {presenterMode&&<button type="button" className="presenter-exit" onClick={()=>void exitPresenter()}><X size={15}/> Exit presenter mode</button>}
 </aside></div>
 <div className="slide-controls"><button type="button" onClick={()=>move(-1)} aria-label="Previous slide"><ArrowLeft size={17}/> Previous</button><div className="slide-progress" aria-label={"Slide "+(index+1)+" of "+presentationSlides.length}>{presentationSlides.map((slide,slideIndex)=><button type="button" key={slide.id} className={slideIndex===index?"active":""} aria-label={"Go to slide "+(slideIndex+1)+": "+slide.title} onClick={()=>setIndex(slideIndex)}/>)}</div><button type="button" onClick={()=>move(1)}>Next <ArrowRight size={17}/></button></div>
-{!presenterMode&&<div className="notes-panel"><button type="button" onClick={()=>setShowNotes((value)=>!value)} className="notes-toggle">{showNotes?"Hide speaker notes":"Show speaker notes"} <span>{showNotes?"−":"+"}</span></button>{showNotes&&<div className="speaker-note"><strong>Presenter notes · Slide {index+1}</strong><p>{current.note}</p></div>}</div>}
-<div className="presentation-bottom"><button type="button" className="reset-button" onClick={()=>{setIndex(0);setShowNotes(false);resetTimer();}}><RotateCcw size={15}/> Restart presentation</button><span>Keyboard: ← → · Home · End · N notes · Space timer</span></div></div>;
+{!presenterMode&&<div className="notes-panel"><button type="button" onClick={()=>setShowNotes((value)=>!value)} className="notes-toggle">{showNotes?"Hide speaker notes":"Show speaker notes"} <span>{showNotes?"−":"+"}</span></button>{showNotes&&<div className="speaker-note"><strong>Presenter notes · Slide {index+1}</strong><p>{current.note}</p><SlideSourceLinks sourceIds={current.sourceIds}/></div>}</div>}
+<div className="presentation-bottom"><div className="presentation-export-actions"><button type="button" className="reset-button" onClick={()=>{setIndex(0);setShowNotes(false);resetTimer();}}><RotateCcw size={15}/> Restart presentation</button><button type="button" className="reset-button" onClick={downloadSpeakerNotes}><Download size={15}/> Download speaker notes</button></div><span>Keyboard: ← → · Home · End · N notes · Space timer</span></div></div>;
 }
