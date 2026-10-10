@@ -34,7 +34,7 @@ for (const route of publicRoutes) {
         id,
         impact,
         help,
-        elements: nodes.map(({ target }) => target),
+        elements: nodes.map(({ target, failureSummary, any }) => ({ target, failureSummary, contrast: any.map(({ data }) => data) })),
       })),
     ).toEqual([]);
   });
