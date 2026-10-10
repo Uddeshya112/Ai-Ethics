@@ -48,22 +48,22 @@ Copy `.env.example` to `.env.local` when configuring Supabase. No credentials ar
 
 - Official findings are not interchangeable with reported claims or project interpretation.
 - The Handan case retains uncertainty about details that are not established by a primary source.
-- The two NTSB investigation identifiers are linked directly to official records: HWY16FH018 (Williston) and HWY18FH011 / report HAR-20/01 (Mountain View).
+- The adopted NTSB reports are linked directly: HAR-17/02 (Williston) and HAR-20/01 (Mountain View). Six corresponding claim records carry report section/page locators.
 - Three selected cases do not establish population-level crash rates.
 - Ethics Lab outputs are conceptual illustrations, not crash reconstructions or real-world safety predictions.
-- Bibliographic records remain starter records pending full passage-level editorial verification.
+- NTSB locators have been checked against the cited report sections; all claims remain drafts pending independent editorial review. Handan claims still rely on secondary reporting pending primary Chinese-language sources.
 
 ## Roadmap
 
-1. Verify every published claim against a precise source locator and create the canonical structured research dataset.
-2. Add source/claim schemas, integrity checks, and a correction log.
+1. Add and maintain precise source locators for the reviewed NTSB claims. Full verification of the Handan case and independent editorial review remain open.
+2. Source/claim schemas and integrity checks are in place. Add and maintain the correction log.
 3. Integrate Supabase Auth, SSR cookies, private workspace records, and tested Row Level Security.
 4. Expand visualizations. The presentation now includes source-linked presenter notes and a Markdown export.
-5. Add accessibility tests and a Vercel preview deployment after credentials and project ownership are confirmed. CI is now configured in GitHub Actions.
+5. Accessibility scans now run in CI across 16 public routes. Configure Vercel preview deployment after credentials and project ownership are confirmed.
 
 ## Status
 
-Initial website slice. GitHub Actions CI is configured and its latest run on 2026-10-10 passed lint, typecheck, tests, and production build. Deployment, live Supabase integration/RLS verification, accessibility tests, and formal editorial review remain incomplete.
+Initial website slice. GitHub Actions CI runs lint, typecheck, tests, axe accessibility scans across 16 public routes, and production build. Deployment, live Supabase integration/RLS verification, full Handan primary-source research, and independent editorial review remain incomplete.
 
 
 ## Evidence registry and private workspace foundation
