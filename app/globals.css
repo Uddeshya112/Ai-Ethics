@@ -66,3 +66,21 @@
 .presenter-source-list a:hover{color:#fff}
 .presentation-export-actions{display:flex;gap:10px;flex-wrap:wrap}
 @media(max-width:680px){.presentation-export-actions{width:100%}.presentation-export-actions .reset-button{font-size:10px}}
+
+/* WCAG AA text contrast for muted copy on light surfaces */
+.hero-note,.stat span,.section-kicker span,.section-heading>p,.pillar-card p,.pillar-top,
+.case-year,.case-name small,.footer-bottom,.case-detail-meta,.case-place,.case-title,.muted-label,
+.slider-scale,.result-overline,.result-primary>span,.result-compare span,.result-caveat,
+.principles-list article>span,.responsibility-promo p,.evidence-intro p,.sources-heading>span,
+.source-id,.source-meta,.source-main p,.research-status-panel>p,.research-card .research-number,
+.research-link-card>span,.technology-stage-number,.accountability-card-top>span,
+.case-detail-meta span,.case-detail-content .case-place,.case-detail-content .case-title,
+.presenter-panel-label,.presenter-next-slide small,.presenter-next-slide p,.presentation-bottom>span{
+  color:#4b5950!important;
+}
+.status-alert{color:#704615}
+.status-ok{color:#3d5e31}
+
+/* Remaining muted labels flagged by the route-level accessibility scan */
+:root{--muted:#4b5950}
+.reflection-grid article>span,.reflection-grid p,.timer-duration{color:#4b5950!important}
