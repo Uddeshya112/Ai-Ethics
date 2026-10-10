@@ -29,7 +29,9 @@ export function validateResearchDataset(): ValidationIssue[] {
     if (["official_finding","documented_fact","reported_fact"].includes(claim.classification) && claim.sourceIds.length === 0) {
       issues.push({ code: "factual_claim_without_source", message: `Factual claim ${claim.id} cites no source` });
     }
-    for (const id of claim.sourceIds) if (!sourceIds.has(id)) issues.push({ code: "unknown_source", message: `Claim ${claim.id} cites unknown source ${id}`);
+    for (const id of claim.sourceIds) {
+      if (!sourceIds.has(id)) issues.push({ code: "unknown_source", message: `Claim ${claim.id} cites unknown source ${id}` });
+    }
     if (claim.classification === "official_finding" && !claim.sourceIds.some((id) => sources.find((source) => source.id === id)?.sourceType === "official_report")) {
       issues.push({ code: "official_finding_without_official_source", message: `Official finding ${claim.id} lacks an official report source` });
     }

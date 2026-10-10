@@ -2,7 +2,7 @@
 
 import { useMemo, useState } from "react";
 import { computeStoppingDistance } from "@/lib/simulations/stopping-distance";
-import { AlertTriangle, ArrowRight, RotateCcw, SlidersHorizontal } from "lucide-react";
+import { AlertTriangle, RotateCcw, SlidersHorizontal } from "lucide-react";
 
 const clamp = (n: number, min: number, max: number) => Math.min(max, Math.max(min, n));
 
