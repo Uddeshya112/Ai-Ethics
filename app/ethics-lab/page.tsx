@@ -1,8 +1,9 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import Link from "next/link";
 import { computeStoppingDistance } from "@/lib/simulations/stopping-distance";
-import { AlertTriangle, RotateCcw, SlidersHorizontal } from "lucide-react";
+import { AlertTriangle, ArrowRight, RotateCcw, SlidersHorizontal } from "lucide-react";
 
 const clamp = (n: number, min: number, max: number) => Math.min(max, Math.max(min, n));
 
@@ -32,6 +33,10 @@ export default function EthicsLabPage() {
       <section className="lab-results"><div className="result-overline">ILLUSTRATIVE OUTPUT</div><div className="result-primary"><strong>{stoppingDistance}<small> m</small></strong><span>Approx. distance before a full stop under the chosen simplified assumptions</span></div><div className="result-bar"><span style={{ width: `${clamp(stoppingDistance / Math.max(remaining, stoppingDistance, 1) * 100, 4, 100)}%` }} /></div><div className="result-compare"><div><span>Distance margin</span><strong>{remaining} m</strong></div><div><span>Attention + response</span><strong>{(attention + response).toFixed(1)} s</strong></div></div><div className={stoppingDistance > remaining ? "result-status status-alert" : "result-status status-ok"}><span />{risk}</div><p className="result-caveat">Simplified constant-deceleration calculation. The output is not validated against a real vehicle or any of the cases studied here.</p></section>
     </div>
     <section className="lab-reflection"><div className="section-kicker">REFLECTION / DISCUSSION</div><h2>What does the model leave out?</h2><div className="reflection-grid"><article><span>01</span><h3>Detection is not certainty</h3><p>Real systems can miss, misclassify, or react differently to objects and road geometry.</p></article><article><span>02</span><h3>Humans are not constant</h3><p>Attention and response vary with context, expectation, fatigue, and interface design.</p></article><article><span>03</span><h3>Numbers inherit assumptions</h3><p>A precise-looking result can still be misleading when the model omits important variables.</p></article></div></section>
+    <section className="responsibility-promo">
+      <div><div className="section-kicker">ETHICS LAB / MODULE C</div><h2>Who carries responsibility?</h2><p>Explore a qualitative, user-controlled allocation across the driver, system design, and oversight. The visualization is conceptual, not a liability finding.</p></div>
+      <Link className="button button-dark" href="/ethics-lab/responsibility">Open responsibility mapping <ArrowRight size={16} /></Link>
+    </section>
   </div>;
 }
 
