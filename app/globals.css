@@ -56,3 +56,13 @@
 .auth-success{border:1px solid #7dad91;background:#eff9f1;border-radius:.55rem;padding:.9rem;font-size:.87rem;color:#245a39}
 .workspace-card{border:1px solid var(--line,#d8ded8);background:var(--surface,#fff);border-radius:.9rem;padding:1.2rem}
 @media(prefers-reduced-motion:reduce){.auth-submit{transition:none!important}}
+
+/* Source references in presenter notes */
+.presenter-source-list{margin-top:14px;padding-top:12px;border-top:1px solid rgba(160,176,163,.25)}
+.presenter-source-list>strong{font:9px var(--mono);letter-spacing:.8px;text-transform:uppercase;color:#a0b0a3}
+.presenter-source-list ul{list-style:none;padding:0;margin:8px 0 0;display:grid;gap:7px}
+.presenter-source-list li{font-size:10px;line-height:1.6}
+.presenter-source-list a{color:#cbe3b0;text-decoration:underline;text-underline-offset:3px}
+.presenter-source-list a:hover{color:#fff}
+.presentation-export-actions{display:flex;gap:10px;flex-wrap:wrap}
+@media(max-width:680px){.presentation-export-actions{width:100%}.presentation-export-actions .reset-button{font-size:10px}}
