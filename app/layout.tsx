@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowUpRight, Github } from "lucide-react";
+import SiteNavigation from "@/components/SiteNavigation";
 import "./globals.css";
 import "./commit3.css";
 
@@ -24,7 +25,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
   return <html lang="en"><body>
     <a className="skip-link" href="#main">Skip to content</a>
     <header className="site-header"><Link className="brand" href="/" aria-label="Beyond Autopilot home"><span className="brand-mark" aria-hidden="true">BA</span><span className="brand-copy"><strong>BEYOND AUTOPILOT</strong><small>AI ETHICS · HUMAN TRUST</small></span></Link>
-      <nav className="main-nav" aria-label="Main navigation">{nav.map((item)=><Link key={item.href} href={item.href}>{item.label}</Link>)}</nav>
+      <SiteNavigation items={nav} />
       <Link className="header-cta" href="/methodology">Our method <ArrowUpRight size={15}/></Link>
     </header>
     <main id="main">{children}</main>
@@ -33,3 +34,4 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
     </footer>
   </body></html>;
 }
+

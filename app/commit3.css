@@ -22,3 +22,8 @@
 .responsibility-promo p,.technology-stage-number{
   color:#4b5950!important;
 }
+
+/* The chart is supplementary; the live percentage legend provides its text equivalent. */
+.responsibility-chart{height:auto}
+.responsibility-pie{height:240px;width:100%}
+
