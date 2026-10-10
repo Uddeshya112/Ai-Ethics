@@ -11,7 +11,7 @@ An evidence-led research website exploring driver-assistance systems, human supe
 - Evidence library with claim-classification guidance and source links.
 - Research methodology and limitations.
 - Conceptual Ethics Lab scenario with editable assumptions.
-- Fifteen-slide interactive web presentation with keyboard navigation and speaker notes.
+- Fifteen-slide interactive web presentation with keyboard navigation, source-linked speaker notes, and Markdown notes export.
 - Corrections policy placeholder.
 - Accessibility basics: skip link, visible focus states, semantic landmarks, responsive layouts, and reduced-motion support.
 
@@ -58,7 +58,7 @@ Copy `.env.example` to `.env.local` when configuring Supabase. No credentials ar
 1. Verify every published claim against a precise source locator and create the canonical structured research dataset.
 2. Add source/claim schemas, integrity checks, and a correction log.
 3. Integrate Supabase Auth, SSR cookies, private workspace records, and tested Row Level Security.
-4. Expand visualizations and complete the presentation with a formal source-linked notes/export workflow.
+4. Expand visualizations. The presentation now includes source-linked presenter notes and a Markdown export.
 5. Add accessibility tests and a Vercel preview deployment after credentials and project ownership are confirmed. CI is now configured in GitHub Actions.
 
 ## Status
