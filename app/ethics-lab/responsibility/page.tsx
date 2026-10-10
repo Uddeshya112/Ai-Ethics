@@ -1,37 +1,18 @@
 "use client";
-
-import { useMemo, useState } from "react";
-import { RotateCcw, Scale } from "lucide-react";
-
-const initialValues = { human: 0, design: 0, organization: 0 };
-type Actor = keyof typeof initialValues;
-const actorInfo: { key: Actor; title: string; description: string }[] = [
-  { key: "human", title: "Human supervision", description: "Attention, understanding, and response demands placed on the human operator." },
-  { key: "design", title: "System and interface design", description: "Capability communication, monitoring support, alerts, and interaction design." },
-  { key: "organization", title: "Organizational governance", description: "Evaluation, documentation, deployment decisions, and risk-management processes." },
+import { useMemo,useState } from "react";
+import Link from "next/link";
+import { Cell,Pie,PieChart,ResponsiveContainer,Tooltip } from "recharts";
+import { RotateCcw } from "lucide-react";
+const INITIAL={driver:50,manufacturer:30,regulator:20} as const;
+type Actor=keyof typeof INITIAL;
+const ACTORS:readonly {id:Actor;label:string;color:string;explanation:string}[]=[
+{id:"driver",label:"Driver / operator",color:"#577847",explanation:"Supervision expectations, information available, and capacity to intervene."},
+{id:"manufacturer",label:"Manufacturer / system design",color:"#28473c",explanation:"Capability communication, interface design, monitoring, and system constraints."},
+{id:"regulator",label:"Regulator / oversight",color:"#9aa98a",explanation:"Standards, evaluation, reporting, and oversight structures."}
 ];
-
-export default function ResponsibilityMappingPage() {
-  const [values, setValues] = useState(initialValues);
-  const total = useMemo(() => Object.values(values).reduce((sum, value) => sum + value, 0), [values]);
-  const reset = () => setValues(initialValues);
-
-  return <div className="page-shell shell">
-    <div className="page-hero"><div className="eyebrow"><span className="eyebrow-line" /> ETHICS LAB / RESPONSIBILITY MAPPING</div><h1>Map the system.<br /><em>Do not manufacture blame.</em></h1><p className="page-lede">Adjust the relative emphasis you want to examine across three analytical dimensions. These controls represent a discussion prompt, not measured responsibility or legal fault.</p></div>
-    <section className="lab-warning"><Scale size={20} /><div><strong>Not a liability calculator</strong><p>The sliders are not evidence-based percentages, and the normalized bars do not describe any actual crash. They only make your chosen discussion emphasis visible.</p></div></section>
-    <div className="lab-layout">
-      <section className="lab-controls"><div className="lab-panel-heading"><Scale size={18} /><h2>Discussion emphasis</h2></div>
-        {actorInfo.map((actor) => <label className="slider-field" key={actor.key}><span className="slider-label">{actor.title}<strong>{values[actor.key]} / 10</strong></span><input type="range" min={0} max={10} step={1} value={values[actor.key]} onChange={(event) => setValues((current) => ({ ...current, [actor.key]: Number(event.target.value) }))} /><span className="slider-scale"><small>Lower emphasis</small><small>Higher emphasis</small></span><span className="source-publisher">{actor.description}</span></label>)}
-        <button className="reset-button" onClick={reset}><RotateCcw size={15} /> Reset discussion</button>
-      </section>
-      <section className="lab-results"><div className="result-overline">YOUR SELECTED EMPHASIS</div>
-        {actorInfo.map((actor) => {
-          const share = total === 0 ? 0 : Math.round(values[actor.key] / total * 100);
-          return <div className="responsibility-row" key={actor.key}><div className="result-compare"><span>{actor.title}</span><strong>{share}%</strong></div><div className="result-bar"><span style={{ width: share + "%" }} /></div></div>;
-        })}
-        <p className="result-caveat">{total === 0 ? "No emphasis selected. No allocation is inferred." : "Percentages are normalized from your chosen slider values only. They are not findings, probabilities, or estimates of actual responsibility."}</p>
-      </section>
-    </div>
-    <section className="method-section"><div className="section-kicker">REFLECTION</div><h2>What evidence would change your view?</h2><p>Identify the specific source, system documentation, or investigative finding that would support or challenge each dimension. Keep legal responsibility separate from ethical analysis and system-design critique.</p></section>
-  </div>;
-}
+export default function ResponsibilityMappingPage(){const [weights,setWeights]=useState<Record<Actor,number>>({...INITIAL});const total=weights.driver+weights.manufacturer+weights.regulator;const data=useMemo(()=>ACTORS.map((actor)=>({name:actor.label,value:total>0?(weights[actor.id]/total)*100:0,color:actor.color})),[total,weights]);const update=(actor:Actor,value:number)=>{if(!Number.isInteger(value)||value<0||value>100)return;setWeights((current)=>({...current,[actor]:value}));};const reset=()=>setWeights({...INITIAL});return <div className="page-shell shell">
+<div className="page-hero"><div className="eyebrow"><span className="eyebrow-line"/> ETHICS LAB / MODULE C</div><h1>Responsibility is distributed.<br/><em>Explore your assumptions.</em></h1><p className="page-lede">Adjust qualitative weights to express how you think responsibility might be distributed across actors in a hypothetical automated-system scenario. Starting values are arbitrary, not measured evidence.</p></div>
+<div className="notice-box"><strong>Conceptual exercise — not a legal determination of liability.</strong><p>This visualization does not assign fault in a real incident. Percentages reflect only user settings; the chart does not infer a correct or evidence-based distribution.</p></div>
+<div className="responsibility-layout"><section className="responsibility-controls"><div className="lab-panel-heading"><h2>Adjust qualitative weights</h2><span>0–100 each</span></div>{ACTORS.map((actor)=><label className="responsibility-slider" key={actor.id}><span className="responsibility-slider-heading"><strong>{actor.label}</strong><output>{weights[actor.id]}</output></span><input type="range" min="0" max="100" step="1" value={weights[actor.id]} onChange={(event)=>update(actor.id,Number(event.target.value))} aria-label={actor.label+" qualitative weight"}/><small>{actor.explanation}</small></label>)}<button type="button" className="reset-button" onClick={reset}><RotateCcw size={15}/> Reset starting values</button></section>
+<section className="responsibility-chart-panel" aria-label="Normalized qualitative weighting chart"><div className="result-overline">CURRENT SETTINGS</div>{total===0?<div className="responsibility-empty"><strong>No allocation set</strong><p>Move at least one slider above zero to display a normalized chart. No values have been inferred.</p></div>:<div className="responsibility-chart"><ResponsiveContainer width="100%" height="100%"><PieChart><Pie data={data} dataKey="value" nameKey="name" innerRadius={68} outerRadius={100} paddingAngle={3} stroke="none">{data.map((entry)=><Cell key={entry.name} fill={entry.color}/>)}</Pie><Tooltip formatter={(value)=>typeof value==="number"?value.toFixed(1)+"%":value}/></PieChart></ResponsiveContainer><div className="responsibility-legend">{data.map((item)=><div key={item.name}><span style={{background:item.color}}/><span>{item.name}</span><strong>{item.value.toFixed(1)}%</strong></div>)}</div></div>}<p className="result-caveat">The chart normalizes user-entered values to 100% for display. It is not a scientific measure or legal-responsibility judgement.</p></section></div>
+<div className="responsibility-footer"><Link className="arrow-link" href="/accountability">Read accountability framework ↗</Link><Link className="arrow-link" href="/ethics-lab">Back to Ethics Lab ↗</Link></div></div>;}

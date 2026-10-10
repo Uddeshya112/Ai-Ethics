@@ -1,20 +1,12 @@
 import type { Metadata } from "next";
-
-export const metadata: Metadata = {
-  title: "Case timeline",
-  description: "A cautious chronology of the three selected driver-assistance case studies.",
-};
-
-const events = [
-  { date: "January 2016", caseName: "Handan, China", person: "Gao Yaning", detail: "A fatal crash was described in contemporary reporting. Publicly available detail and claims about system engagement require careful attribution.", status: "Reported context" },
-  { date: "May 2016", caseName: "Williston, Florida", person: "Joshua Brown", detail: "A fatal crash later investigated by the National Transportation Safety Board under investigation HWY16FH018.", status: "Official investigation" },
-  { date: "March 2018", caseName: "Mountain View, California", person: "Walter Huang", detail: "A fatal crash investigated by the NTSB under HWY18FH011; the final report is HAR-20/01.", status: "Official investigation" },
-];
-
-export default function TimelinePage() {
-  return <div className="page-shell shell">
-    <div className="page-hero"><div className="eyebrow"><span className="eyebrow-line" /> TIMELINE / CASE CONTEXT</div><h1>Chronology without<br /><em>false precision.</em></h1><p className="page-lede">Dates are shown only at the precision supported by the current project records. This overview is a navigation aid, not a substitute for the underlying reports.</p></div>
-    <div className="principles-list">{events.map((event) => <article key={event.caseName}><span aria-hidden="true">•</span><div><div className="source-meta"><span>{event.status}</span><span>{event.date}</span></div><h2>{event.caseName} · {event.person}</h2><p>{event.detail}</p></div></article>)}</div>
-    <section className="notice-box"><div><strong>Chronology caveat</strong><p>The Handan date remains at month precision. Do not infer an exact day or treat system engagement as confirmed without adequate primary-source support. Consult the <a href="/evidence">evidence ledger</a> for source context.</p></div></section>
-  </div>;
-}
+import Link from "next/link";
+import { getVisibleIncidents, showDraftResearch } from "@/lib/research/publication";
+import { sources } from "@/lib/research/sources";
+export const metadata: Metadata = { title:"Incident timeline", description:"Chronological events from the registered research dataset, subject to publication status." };
+function sortDateValue(date:string):number{if(!date)return Number.POSITIVE_INFINITY;const normalized=/^\d{4}-\d{2}$/.test(date)?date+"-01":date;const value=Date.parse(normalized+"T12:00:00Z");return Number.isFinite(value)?value:Number.POSITIVE_INFINITY;}
+function formatDate(date:string):string{if(!date)return "Date unresolved";if(/^\d{4}-\d{2}$/.test(date)){const p=date.split("-").map(Number);const label=new Intl.DateTimeFormat("en",{month:"long",timeZone:"UTC"}).format(new Date(Date.UTC(p[0],p[1]-1,1)));return label+" "+p[0]+" (day unspecified)";}if(/^\d{4}-\d{2}-\d{2}$/.test(date))return new Intl.DateTimeFormat("en",{day:"numeric",month:"long",year:"numeric",timeZone:"UTC"}).format(new Date(date+"T12:00:00Z"));return "Date unresolved";}
+const anchors:Record<string,string>={"gao-yaning":"handan","joshua-brown":"williston","walter-huang":"mountain-view"};
+export default function TimelinePage(){const visible=getVisibleIncidents();const events=visible.flatMap((incident)=>incident.events.map((event,index)=>({...event,key:incident.id+"-"+event.date+"-"+index,title:incident.title,anchor:anchors[incident.id]}))).sort((a,b)=>sortDateValue(a.date)-sortDateValue(b.date));const titles=new Map(sources.map((source)=>[source.id,source.title]));return <div className="page-shell shell">
+<div className="page-hero"><div className="eyebrow"><span className="eyebrow-line"/> TIMELINE / CHRONOLOGY</div><h1>Sequence matters.<br/><em>So does certainty.</em></h1><p className="page-lede">The timeline is built from canonical event records. Month-only dates stay month-only, unresolved dates stay unresolved, and publication status controls which entries appear.</p></div>
+{events.length===0?<section className="notice-box"><div><strong>No incident events are cleared for public timeline display.</strong><p>Registered incidents remain draft. Events are hidden in production until each incident is explicitly marked published. Development preview can show draft data.</p></div></section>:<ol className="timeline-list">{events.map((event)=><li className="timeline-item" key={event.key}><div className="timeline-marker" aria-hidden="true"/><div className="timeline-content"><div className="timeline-meta"><time>{formatDate(event.date)}</time><span className="badge badge-gray">{event.classification.replaceAll("_"," ")}</span></div><p>{event.description}</p>{event.sourceIds.length>0&&<p className="timeline-source">Sources: {event.sourceIds.map((id)=>titles.get(id)??id).join("; ")}</p>}{event.anchor&&<Link className="arrow-link" href={"/cases#"+event.anchor}>Related case: {event.title} ↗</Link>}</div></li>)}</ol>}
+{showDraftResearch&&<p className="draft-preview-note">Development preview may include draft research. It is not an indication of editorial approval.</p>}</div>;}

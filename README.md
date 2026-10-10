@@ -11,7 +11,7 @@ An evidence-led research website exploring driver-assistance systems, human supe
 - Evidence library with claim-classification guidance and source links.
 - Research methodology and limitations.
 - Conceptual Ethics Lab scenario with editable assumptions.
-- Fifteen-slide interactive web presentation with keyboard navigation and speaker notes.
+- Fifteen-slide interactive web presentation with keyboard navigation, source-linked speaker notes, and Markdown notes export.
 - Corrections policy placeholder.
 - Accessibility basics: skip link, visible focus states, semantic landmarks, responsive layouts, and reduced-motion support.
 
@@ -48,19 +48,39 @@ Copy `.env.example` to `.env.local` when configuring Supabase. No credentials ar
 
 - Official findings are not interchangeable with reported claims or project interpretation.
 - The Handan case retains uncertainty about details that are not established by a primary source.
-- The two NTSB investigation identifiers are linked directly to official records: HWY16FH018 (Williston) and HWY18FH011 / report HAR-20/01 (Mountain View).
+- The adopted NTSB reports are linked directly: HAR-17/02 (Williston) and HAR-20/01 (Mountain View). Six corresponding claim records carry report section/page locators.
 - Three selected cases do not establish population-level crash rates.
 - Ethics Lab outputs are conceptual illustrations, not crash reconstructions or real-world safety predictions.
-- Bibliographic records remain starter records pending full passage-level editorial verification.
+- NTSB locators have been checked against the cited report sections; all claims remain drafts pending independent editorial review. Handan claims still rely on secondary reporting pending primary Chinese-language sources.
 
 ## Roadmap
 
-1. Verify every published claim against a precise source locator and create the canonical structured research dataset.
-2. Add source/claim schemas, integrity checks, and a correction log.
+1. Add and maintain precise source locators for the reviewed NTSB claims. Full verification of the Handan case and independent editorial review remain open.
+2. Source/claim schemas and integrity checks are in place. Add and maintain the correction log.
 3. Integrate Supabase Auth, SSR cookies, private workspace records, and tested Row Level Security.
-4. Expand visualizations and complete the presentation with a formal source-linked notes/export workflow.
-5. Add CI, accessibility tests, and a Vercel preview deployment after credentials and project ownership are confirmed.
+4. Expand visualizations. The presentation now includes source-linked presenter notes and a Markdown export.
+5. Accessibility scans now run in CI across 16 public routes. Configure Vercel preview deployment after credentials and project ownership are confirmed.
 
 ## Status
 
-Initial website slice; deployment, automated checks, Supabase integration, and formal editorial review have not yet been run or completed.
+Initial website slice. GitHub Actions CI runs lint, typecheck, tests, axe accessibility scans across 16 public routes, and production build. Deployment, live Supabase integration/RLS verification, full Handan primary-source research, and independent editorial review remain incomplete.
+
+
+## Evidence registry and private workspace foundation
+
+The research registry has typed source, incident, and claim records. Claim classifications separate official findings, documented facts, reported facts, project interpretations, hypotheses, and conceptual assumptions. Integrity tests check registry references and require official-report sources for claims labeled as official findings.
+
+All claims and incidents begin in `draft` status. A live source URL is not the same as passage-level editorial verification. Do not publish a claim until its report passage, locator, context, and limitations have been reviewed.
+
+### Supabase setup
+
+1. Create a Supabase project and copy its URL and publishable key into `.env.local` using `.env.example`.
+2. Apply `supabase/migrations/0001_init.sql` through the Supabase CLI or SQL editor.
+3. Set the Supabase Auth Site URL to `http://localhost:3000` and allow the `/auth/callback` redirect URL.
+4. Run `npm install`, `npm test`, `npm run lint`, `npm run typecheck`, and `npm run build`.
+
+The dashboard verifies the authenticated user on the server. Private notes, bookmarks, and saved simulations have per-user Row Level Security policies. The service-role key is never used in browser code.
+
+### Verification status
+
+The schema, auth routes, and tests are scaffolding for review; live Supabase redirect tests and RLS integration tests remain release gates.

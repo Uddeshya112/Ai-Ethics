@@ -11,7 +11,7 @@ const cases = [
     type: "Reported circumstances", status: "Important uncertainty",
     summary: "Contemporary reporting described a fatal collision involving a Tesla vehicle in Hebei. Publicly available reporting does not establish every operational detail with the same level of certainty as a formal investigative report.",
     takeaway: "Autopilot engagement must not be stated as confirmed without a reliable primary source establishing it. Treat media reports as attributed reports, not official findings.",
-    links: [{ label: "The Guardian reporting", href: "https://www.theguardian.com/technology/2016/sep/14/tesla-autopilot-china-crash" }],
+    links: [{ label: "The Guardian reporting", href: "https://www.theguardian.com/technology/2016/sep/14/tesla-fatal-crash-china-autopilot-gao-yaning" }],
   },
   {
     id: "williston", no: "CASE 02", place: "WILLISTON, FLORIDA · UNITED STATES", date: "MAY 7, 2016", person: "Joshua Brown",

@@ -1,23 +1,27 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { ArrowUpRight, BookOpenCheck, ShieldCheck } from "lucide-react";
+import { claims } from "@/lib/research/claims";
+import { claimClassification } from "@/lib/research/schema";
 
-export const metadata: Metadata = {
-  title: "Research overview",
-  description: "Scope, questions, and limits of the Beyond Autopilot case-study research.",
-};
-
-const questions = [
-  ["Capability", "What was the driver-assistance system designed and documented to do at the time?"],
-  ["Supervision", "What do the available records support about the human-supervision context?"],
-  ["Responsibility", "How should responsibility be examined across people, interfaces, organizations, and operating conditions?"],
+export const metadata: Metadata = { title: "Research overview", description: "Questions, evidence categories, and limitations guiding Beyond Autopilot." };
+const concepts = [
+{number:"01",title:"The trust–capability gap",text:"Explore the distance between what a driver-assistance system is designed to do, what a person expects it to do, and what can be monitored in practice."},
+{number:"02",title:"Perception and edge cases",text:"Consider how unusual road layouts, occlusion, and changing conditions challenge the assumption that routine performance guarantees reliable performance in every situation."},
+{number:"03",title:"Human supervision",text:"Ask what continuous supervision requires, what monitoring signals can establish, and how an interface communicates system limits."},
+{number:"04",title:"Responsibility in complex systems",text:"Use the moral-crumple-zone concept as an analytical lens for considering responsibility across people, design, operation, and oversight—not as a liability determination."}
 ];
-
-export default function ResearchPage() {
-  return <div className="page-shell shell">
-    <div className="page-hero"><div className="eyebrow"><span className="eyebrow-line" /> RESEARCH / SCOPE</div><h1>Ask better questions.<br /><em>Make narrower claims.</em></h1><p className="page-lede">Beyond Autopilot examines three fatal-crash case studies involving driver assistance. It separates official findings, documented facts, reported claims, and project interpretation.</p></div>
-    <section className="method-section"><div className="section-kicker">RESEARCH QUESTIONS</div><div className="reflection-grid">{questions.map(([title, body], index) => <article key={title}><span>0{index + 1}</span><h3>{title}</h3><p>{body}</p></article>)}</div></section>
-    <section className="evidence-intro"><BookOpenCheck size={22} /><div><h2>Evidence before narrative</h2><p>Each case has a different evidence context. A secondary report is not an official finding, and a conceptual ethical interpretation is not a forensic conclusion.</p><Link className="arrow-link" href="/evidence">Explore the evidence ledger <ArrowUpRight size={15} /></Link></div></section>
-    <section className="notice-box"><ShieldCheck size={20} /><div><strong>Scope and limitations</strong><p>These selected cases are illustrative, not a representative sample. This project does not estimate population-level crash rates, rank manufacturers by risk, or establish one universal cause.</p></div></section>
-  </div>;
-}
+const labels: Record<(typeof claimClassification.options)[number],string> = {official_finding:"Official finding",documented_fact:"Documented fact",reported_fact:"Reported fact",research_interpretation:"Research interpretation",hypothesis:"Hypothesis / unknown",conceptual_assumption:"Conceptual assumption"};
+const descriptions: Record<(typeof claimClassification.options)[number],string> = {
+official_finding:"A conclusion made by an official investigative body; verify the exact passage before publication.",
+documented_fact:"A statement tied to an identifiable record without implying a broader causal conclusion.",
+reported_fact:"A statement attributed to reporting or another secondary source; attribution stays visible.",
+research_interpretation:"The project's own analysis, not an official finding.",
+hypothesis:"An open question or uncertain proposition; not proof for either side.",
+conceptual_assumption:"A premise used in an educational scenario, not a claim about an actual incident."
+};
+export default function ResearchPage(){return <div className="page-shell shell">
+<div className="page-hero"><div className="eyebrow"><span className="eyebrow-line"/> RESEARCH / OVERVIEW</div><h1>Questions before<br/><em>conclusions.</em></h1><p className="page-lede">Beyond Autopilot examines driver-assistance, human supervision, and accountability through a small, deliberately bounded set of cases. This overview describes analytical questions; it does not certify individual claims as publication-ready.</p></div>
+<section className="research-card-grid">{concepts.map((item)=><article className="research-card" key={item.number}><span className="research-number">{item.number}</span><h2>{item.title}</h2><p>{item.text}</p></article>)}</section>
+<section className="research-status-panel"><div className="section-kicker">EDITORIAL STATUS</div><h2>Evidence labels are not decoration.</h2><p>The canonical dataset currently contains {claims.length} claim records. A record&apos;s presence does not mean it passed review. Starter claims remain draft until source passages, context, and limitations are verified.</p><div className="classification-grid">{claimClassification.options.map((item)=><article className="classification-card" key={item}><span className="badge badge-gray">{labels[item]}</span><p>{descriptions[item]}</p></article>)}</div></section>
+<section className="research-link-grid" aria-label="Explore research modules"><Link className="research-link-card" href="/timeline"><span>01 / EVENTS</span><strong>Chronological timeline</strong><small>View dated events that pass the publication gate.</small></Link><Link className="research-link-card" href="/technology"><span>02 / SYSTEMS</span><strong>Technology explainer</strong><small>Review a generalized driver-assistance architecture.</small></Link><Link className="research-link-card" href="/accountability"><span>03 / ETHICS</span><strong>Accountability framework</strong><small>Compare questions across system actors.</small></Link><Link className="research-link-card" href="/cases"><span>04 / CASES</span><strong>Case studies</strong><small>Read case summaries with evidence boundaries.</small></Link></section>
+</div>;}

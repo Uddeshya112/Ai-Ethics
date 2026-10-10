@@ -1,23 +1,15 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { ArrowUpRight, Eye, Gauge, UserRound } from "lucide-react";
-
-export const metadata: Metadata = {
-  title: "Technology and supervision",
-  description: "A plain-language overview of driver assistance, system boundaries, and human supervision.",
-};
-
-const layers = [
-  { title: "Sensing and perception", body: "The system interprets sensor inputs and estimates relevant objects or road features. Perception can be incomplete or uncertain.", icon: Eye },
-  { title: "Assistance behavior", body: "A driver-assistance feature can support a bounded driving task without becoming a fully autonomous driver in every condition.", icon: Gauge },
-  { title: "Human supervision", body: "The person behind the wheel may remain responsible for monitoring the road and responding when the system reaches its limits.", icon: UserRound },
+import { AlertTriangle, Eye, GitBranch, ScanSearch, ShieldCheck } from "lucide-react";
+export const metadata:Metadata={title:"Driver-assistance technology",description:"A generalized conceptual model of sensing, perception, planning, actuation, and human supervision."};
+const stages=[
+{number:"01",title:"Sensing",icon:Eye,text:"Sensors collect signals about the surrounding scene. Sensor suites and capabilities vary by vehicle and system."},
+{number:"02",title:"Perception",icon:ScanSearch,text:"Software estimates lanes, objects, motion, and other features from imperfect sensor data. Estimates can be uncertain or wrong."},
+{number:"03",title:"Planning and control",icon:GitBranch,text:"The system selects target behavior and commands steering, braking, or acceleration within intended operating conditions."},
+{number:"04",title:"Human supervision",icon:ShieldCheck,text:"For SAE Level 2 assistance, the driver remains responsible for continuous supervision and must be ready to intervene as required."}
 ];
-
-export default function TechnologyPage() {
-  return <div className="page-shell shell">
-    <div className="page-hero"><div className="eyebrow"><span className="eyebrow-line" /> TECHNOLOGY / SYSTEM BOUNDARIES</div><h1>Assistance is a capability.<br /><em>Not a promise.</em></h1><p className="page-lede">Driver-assistance systems combine technical capability with human expectations. A responsible explanation must describe both the feature and its limits.</p></div>
-    <div className="reflection-grid">{layers.map(({ title, body, icon: Icon }, index) => <article key={title}><span>0{index + 1}</span><Icon size={22} /><h3>{title}</h3><p>{body}</p></article>)}</div>
-    <section className="method-section"><div className="section-kicker">INTERPRETATION RULE</div><h2>Do not collapse different evidence into one claim.</h2><p>Product documentation, official investigative findings, contemporaneous reporting, and project analysis answer different questions. A claim about a specific incident needs a source that supports that incident-specific detail.</p><Link className="arrow-link" href="/evidence">Review source classifications <ArrowUpRight size={15} /></Link></section>
-    <section className="notice-box"><div><strong>Terminology matters</strong><p>Feature names and marketing language do not, by themselves, establish the technical capability available in a particular vehicle, software version, road, or moment.</p></div></section>
-  </div>;
-}
+export default function TechnologyPage(){return <div className="page-shell shell">
+<div className="page-hero"><div className="eyebrow"><span className="eyebrow-line"/> TECHNOLOGY / EXPLAINER</div><h1>Assistance is a system.<br/><em>Not a promise.</em></h1><p className="page-lede">This is a generalized conceptual architecture for driver-assistance systems, not proprietary architecture for any manufacturer. Sensor suites, implementation details, and operating limits differ.</p></div>
+<ol className="technology-pipeline">{stages.map((stage,index)=>{const Icon=stage.icon;return <li className="technology-stage" key={stage.number}><span className="technology-stage-number">{stage.number}</span><div className="technology-stage-icon"><Icon size={22} aria-hidden="true"/></div><h2>{stage.title}</h2><p>{stage.text}</p>{index<stages.length-1&&<span className="technology-arrow" aria-hidden="true">↓</span>}</li>;})}</ol>
+<section className="notice-box"><AlertTriangle size={20}/><div><strong>The supervision interface is a design question.</strong><p>Stable performance in routine situations does not establish reliable performance in every situation. A conceptual concern is whether a driver can understand system limits, remain attentive, and respond to change. This is not a finding about an individual crash.</p></div></section>
+<section className="research-link-grid"><Link className="research-link-card" href="/ethics-lab"><span>TRY A MODEL</span><strong>Ethics Lab</strong><small>Inspect assumptions in a simplified educational scenario.</small></Link><Link className="research-link-card" href="/evidence"><span>READ SOURCES</span><strong>Evidence ledger</strong><small>See how the project labels evidence and uncertainty.</small></Link><Link className="research-link-card" href="/accountability"><span>WIDEN THE LENS</span><strong>Accountability</strong><small>Consider roles around a complex technical system.</small></Link></section></div>;}
