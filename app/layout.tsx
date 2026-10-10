@@ -10,7 +10,6 @@ export const metadata: Metadata = {
   },
   description:
     "An evidence-led research experience exploring automated driving, human trust, system limits, and responsibility.",
-  metadataBase: new URL("https://beyond-autopilot.vercel.app"),
   openGraph: {
     title: "Beyond Autopilot",
     description: "AI ethics, human trust, and the limits of automated driving.",
