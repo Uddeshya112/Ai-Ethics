@@ -1,5 +1,4 @@
 @import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap');
-@import "tailwindcss";
 
 :root{--ink:#17211f;--muted:#66716d;--paper:#f7f7f2;--white:#fff;--line:#dce1db;--green:#c6f36a;--green-dark:#34552b;--blue:#dbe9f8;--amber:#f7e7c8;--purple:#ece2fa;--mono:'DM Mono',monospace;--sans:'DM Sans',sans-serif;--display:'Manrope',sans-serif}
 *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:15px;line-height:1.65;-webkit-font-smoothing:antialiased}a{color:inherit;text-decoration:none}button,input{font:inherit}button,a{-webkit-tap-highlight-color:transparent}a:focus-visible,button:focus-visible,input:focus-visible{outline:3px solid #5d8c31;outline-offset:3px}.skip-link{position:absolute;top:-100px;left:12px;background:var(--green);padding:10px 14px;z-index:100}.skip-link:focus{top:12px}.shell{width:min(1180px,calc(100% - 56px));margin-inline:auto}
