@@ -29,6 +29,14 @@ export function validateResearchDataset(): ValidationIssue[] {
     if (["official_finding","documented_fact","reported_fact"].includes(claim.classification) && claim.sourceIds.length === 0) {
       issues.push({ code: "factual_claim_without_source", message: `Factual claim ${claim.id} cites no source` });
     }
+    for (const citation of claim.citations) {
+      if (!sourceIds.has(citation.sourceId)) issues.push({ code: "unknown_citation_source", message: `Claim ${claim.id} citation references unknown source ${citation.sourceId}` });
+      if (!claim.sourceIds.includes(citation.sourceId)) issues.push({ code: "citation_source_not_linked", message: `Claim ${claim.id} citation source ${citation.sourceId} is not in sourceIds` });
+    }
+    const hasOfficialReport = claim.sourceIds.some((id) => sources.find((source) => source.id === id)?.sourceType === "official_report");
+    if ((claim.classification === "official_finding" || (claim.classification === "documented_fact" && hasOfficialReport)) && !claim.citations.some((citation) => citation.locator.trim().length > 0 && sources.find((source) => source.id === citation.sourceId)?.sourceType === "official_report")) {
+      issues.push({ code: "official_claim_without_locator", message: `Official claim ${claim.id} lacks a located official-report citation` });
+    }
     for (const id of claim.sourceIds) {
       if (!sourceIds.has(id)) issues.push({ code: "unknown_source", message: `Claim ${claim.id} cites unknown source ${id}` });
     }
