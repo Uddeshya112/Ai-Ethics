@@ -15,3 +15,10 @@
 @media(max-width:900px){.technology-pipeline{grid-template-columns:repeat(2,minmax(0,1fr))}.responsibility-layout{grid-template-columns:1fr}.presenter-stage{grid-template-columns:1fr}.presenter-side-panel{display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}.presenter-panel-section:last-of-type{grid-column:1/-1}.presentation-page.presenter-mode .presenter-stage{height:auto;min-height:0;grid-template-columns:1fr}.presentation-page.presenter-mode .slide-frame{min-height:48dvh}.presentation-page.presenter-mode .presenter-side-panel{grid-template-columns:repeat(2,minmax(0,1fr));overflow:visible}}
 @media(max-width:600px){.research-card-grid,.accountability-grid,.research-link-grid{grid-template-columns:1fr}.responsibility-promo{display:block}.responsibility-promo .button{margin-top:18px}.technology-pipeline{grid-template-columns:1fr}.technology-stage{min-height:0}.presenter-side-panel{display:flex}.presentation-page.presenter-mode{padding:14px}.presentation-page.presenter-mode .presentation-heading{display:block}.presentation-page.presenter-mode .presentation-intro{display:none}.presentation-page.presenter-mode .presenter-stage{height:auto}.presentation-page.presenter-mode .slide-frame{min-height:58dvh}.presenter-timer output{font-size:26px}}
 @media(prefers-reduced-motion:reduce){.presentation-page .slide-body{animation:none}}
+
+/* Muted research and presenter labels must remain readable on light panels. */
+.presenter-panel-label,.presenter-next-slide small,.presenter-next-slide p,
+.research-number,.research-link-card>span,.research-status-panel>p,
+.responsibility-promo p,.technology-stage-number{
+  color:#4b5950!important;
+}
