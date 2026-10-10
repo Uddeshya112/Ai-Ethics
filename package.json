@@ -8,7 +8,7 @@
     "start": "next start",
     "lint": "eslint .",
     "typecheck": "tsc --noEmit",
-    "test": "vitest run",
+    "test": "vitest run --configLoader runner",
     "test:a11y": "playwright test --project=chromium"
   },
   "dependencies": {
@@ -34,3 +34,4 @@
     "@playwright/test": "^1.56.1"
   }
 }
+
