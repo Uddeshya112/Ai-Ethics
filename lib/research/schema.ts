@@ -13,11 +13,14 @@ export const sourceSchema = z.object({
   lastVerifiedAt: z.string().date().nullable().default(null), language: z.string().default("en"),
   translationOfId: z.string().nullable().default(null), limitations: z.array(z.string()).default([]),
 });
+export const citationSchema = z.object({
+  sourceId: z.string().min(1), relationship: sourceRelationship, locator: z.string().min(1),
+});
 export const claimSchema = z.object({
   id: z.string().min(1), incidentId: z.string().nullable().default(null), statement: z.string().min(1),
   classification: claimClassification, confidence: confidence.default("unassessed"),
   status: claimStatus.default("draft"), limitations: z.array(z.string()).default([]),
-  sourceIds: z.array(z.string()).default([]), lastVerifiedAt: z.string().date().nullable().default(null),
+  sourceIds: z.array(z.string()).default([]), citations: z.array(citationSchema).default([]), lastVerifiedAt: z.string().date().nullable().default(null),
 });
 export const eventSchema = z.object({
   date: z.string(), description: z.string().min(1), classification: claimClassification,
