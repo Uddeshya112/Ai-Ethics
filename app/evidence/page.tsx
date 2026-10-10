@@ -1,5 +1,9 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { BookOpenCheck, ExternalLink, Info } from "lucide-react";
+import { incidents } from "@/lib/research/incidents";
+import { sources as canonicalSources } from "@/lib/research/sources";
+import { showDraftResearch } from "@/lib/research/publication";
 
 export const metadata: Metadata = { title: "Evidence ledger", description: "Primary sources, claim classifications, and limitations for the Beyond Autopilot research project." };
 
@@ -19,6 +23,9 @@ const classes = [
   { label: "Hypothesis / unknown", color: "gray", desc: "A question or uncertain proposition that the available evidence does not settle." },
 ];
 
+const matrixIncidents=incidents.filter((incident)=>incident.publicationStatus==="published"||showDraftResearch);
+const matrixSourceTitles=new Map(canonicalSources.map((source)=>[source.id,source.title]));
+const matrixAnchors:Record<string,string>={"gao-yaning":"handan","joshua-brown":"williston","walter-huang":"mountain-view"};
 export default function EvidencePage() {
   return <div className="page-shell shell">
     <div className="page-hero"><div className="eyebrow"><span className="eyebrow-line" /> EVIDENCE / TRANSPARENCY</div><h1>Show the source.<br /><em>Keep the uncertainty.</em></h1><p className="page-lede">A source list is only the beginning. The important work is connecting a specific claim to the evidence that supports it—and stating what that evidence cannot tell us.</p></div>
@@ -27,5 +34,14 @@ export default function EvidencePage() {
     <div className="sources-heading"><div><div className="section-kicker">REFERENCE LIBRARY</div><h2>Start with primary sources.</h2></div><span>{sources.length} starter records</span></div>
     <div className="source-list">{sources.map((s) => <article className="source-card" key={s.id}><div className="source-id">{s.id}</div><div className="source-main"><div className="source-meta"><span>{s.type}</span><span>{s.year}</span></div><h3>{s.title}</h3><p className="source-publisher">{s.publisher}</p><p>{s.note}</p></div><a className="source-open" href={s.href} target="_blank" rel="noreferrer" aria-label={`Open ${s.title} in a new tab`}><ExternalLink size={18} /></a></article>)}</div>
     <div className="notice-box"><Info size={20} /><div><strong>Editorial status: starter bibliography</strong><p>These are initial research leads, not a claim that every citation locator and every factual statement has completed a full editorial audit. Verify exact report passages, publication metadata, and translation provenance before formal publication.</p></div></div>
+    <section className="research-status-panel">
+      <div className="section-kicker">CASE COMPARISON / DATASET STATUS</div><h2>Compare evidence context, not assumed equivalence.</h2>
+      <p>The matrix draws incident and source references from the canonical dataset. Draft incident details are shown only in development preview; production requires explicit publication status.</p>
+      <div className="evidence-matrix-wrap"><table className="evidence-matrix">
+        <thead><tr><th scope="col">Incident</th><th scope="col">Location</th><th scope="col">Registered status</th><th scope="col">Linked source records</th></tr></thead>
+        <tbody>{matrixIncidents.map((incident)=><tr key={incident.id}><th scope="row"><Link href={"/cases#"+(matrixAnchors[incident.id]??"")}>{incident.title}</Link></th><td>{incident.location}</td><td><span className="badge badge-gray">{incident.publicationStatus}</span><br/>{incident.statusNote}</td><td>{Array.from(new Set(incident.events.flatMap((event)=>event.sourceIds))).map((id)=>matrixSourceTitles.get(id)??id).join("; ")||"No registered source"}</td></tr>)}</tbody>
+      </table></div>
+      {matrixIncidents.length===0&&<p>No incident records are cleared for production matrix display. Draft entries are available only in development or with an explicit preview override.</p>}
+    </section>
   </div>;
 }
