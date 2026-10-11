@@ -4,6 +4,7 @@ import { ArrowUpRight, Github } from "lucide-react";
 import SiteNavigation from "@/components/SiteNavigation";
 import "./globals.css";
 import "./commit3.css";
+import "./automotive.css";
 
 export const metadata: Metadata = {
   title: { default: "Beyond Autopilot — AI Ethics & Automated Driving", template: "%s | Beyond Autopilot" },
@@ -34,4 +35,3 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
     </footer>
   </body></html>;
 }
-
