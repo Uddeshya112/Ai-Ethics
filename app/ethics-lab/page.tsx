@@ -2,6 +2,7 @@
 
 import { useMemo, useState } from "react";
 import Link from "next/link";
+import EditorialImage from "@/components/EditorialImage";
 import { computeStoppingDistance } from "@/lib/simulations/stopping-distance";
 import { AlertTriangle, ArrowRight, RotateCcw, SlidersHorizontal } from "lucide-react";
 
@@ -28,6 +29,7 @@ export default function EthicsLabPage() {
   const reset = () => { setSpeed(60); setAttention(1.8); setResponse(0.8); setMargin(1.2); };
   return <div className="page-shell shell">
     <div className="page-hero"><div className="eyebrow"><span className="eyebrow-line" /> ETHICS LAB / SCENARIO 001</div><h1>Seconds matter.<br /><em>Assumptions matter too.</em></h1><p className="page-lede">Explore how attention delay, response time, and available distance interact. The point is not to predict a crash—it is to make hidden assumptions inspectable.</p></div>
+    <EditorialImage asset="ethicsLab" caption="Conceptual illustration. Perception overlays do not represent live sensor readings or incident telemetry." />
     <div className="lab-warning"><AlertTriangle size={20} /><div><strong>Conceptual demonstration — not a crash reconstruction</strong><p>This simplified model is illustrative only. It omits road grade, tire and brake variation, perception uncertainty, system behavior, obstacle motion, and many other factors. It must not be used to assess a real vehicle, incident, or person.</p></div></div>
     <div className="lab-layout">
       <section className="lab-controls"><div className="lab-panel-heading"><SlidersHorizontal size={18} /><h2>Change the assumptions</h2></div>
@@ -73,4 +75,3 @@ function Quiz({answers,onAnswer}:{answers:number[];onAnswer:(index:number,value:
 function Slider({ label, value, min, max, step, unit, onChange }: { label: string; value: number; min: number; max: number; step: number; unit: string; onChange: (value: number) => void }) {
   return <label className="slider-field"><span className="slider-label">{label}<strong>{value.toFixed(step < 1 ? 1 : 0)} {unit}</strong></span><input type="range" min={min} max={max} step={step} value={value} onChange={(e) => onChange(Number(e.target.value))} /><span className="slider-scale"><small>{min} {unit}</small><small>{max} {unit}</small></span></label>;
 }
-

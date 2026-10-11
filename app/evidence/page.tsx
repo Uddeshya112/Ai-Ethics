@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { BookOpenCheck, ExternalLink, Info } from "lucide-react";
+import EditorialImage from "@/components/EditorialImage";
 import { incidents } from "@/lib/research/incidents";
 import { claims } from "@/lib/research/claims";
 import { sources as canonicalSources } from "@/lib/research/sources";
@@ -31,6 +32,7 @@ const matrixAnchors:Record<string,string>={"gao-yaning":"handan","joshua-brown":
 export default function EvidencePage() {
   return <div className="page-shell shell">
     <div className="page-hero"><div className="eyebrow"><span className="eyebrow-line" /> EVIDENCE / TRANSPARENCY</div><h1>Show the source.<br /><em>Keep the uncertainty.</em></h1><p className="page-lede">A source list is only the beginning. The important work is connecting a specific claim to the evidence that supports it—and stating what that evidence cannot tell us.</p></div>
+    <EditorialImage asset="evidence" caption="Atmospheric illustration only. The depicted screens and papers are not project data or source evidence." />
     <section className="evidence-intro"><BookOpenCheck size={22} /><div><h2>Evidence is not a visual style.</h2><p>Labels communicate the status of a claim, not how much we like or dislike it. No claim should gain certainty because it appears in a polished interface.</p></div></section>
     <h2 className="subheading">Claim classifications</h2><div className="classification-grid">{classes.map((c) => <article className="classification-card" key={c.label}><span className={`badge badge-${c.color}`}>{c.label}</span><p>{c.desc}</p></article>)}</div>
     <div className="sources-heading"><div><div className="section-kicker">REFERENCE LIBRARY</div><h2>Start with primary sources.</h2></div><span>{sources.length} starter records</span></div>
@@ -68,4 +70,3 @@ export default function EvidencePage() {
     <section className="editorial-section"><div className="editorial-heading"><div><div className="section-kicker">CLAIM REVIEW / READER GUIDE</div><h2>How to check a claim yourself.</h2></div></div><div className="editorial-grid"><div className="editorial-block"><ol><li>Find the source. If there is none, the statement remains a hypothesis.</li><li>Find the exact passage and page. Record the locator, not just the document title.</li><li>Ask what the passage says and what it does not say.</li><li>Keep qualifiers such as “likely,” “contributed,” and “in part.”</li><li>Check the date and whether a later record supersedes an earlier one.</li></ol></div><div className="editorial-block"><h3>Common ways crash stories go wrong</h3><ul><li>Single-cause stories replace multi-factor findings with a slogan.</li><li>“Likely” is silently rewritten as “was.”</li><li>A wire report is treated as an investigation.</li><li>Anecdotes are used as crash-rate statistics.</li><li>Hindsight is substituted for what was knowable at the time.</li></ul></div></div></section>
   </div>;
 }
-
